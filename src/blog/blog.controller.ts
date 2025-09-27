@@ -7,7 +7,6 @@ import {
   Optional,
   Param,
   Post,
-  Put,
 } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { BlogDto } from './dto/blog.dto';
@@ -53,27 +52,15 @@ export class BlogController {
     );
   }
 
-  @Put('/update')
-  @Roles(['manager'])
-  async update(@Body('blog') blog: BlogDto, @User() user: UserT) {
-    return await this.blogService.updateAndCheckAuthor(blog, user.googleId);
-  }
-
-  @Delete('/delete')
-  @Roles(['manager'])
-  async delete(@Body('blogId') blogId: string, @User() user: UserT) {
+  @Delete('/delete/manager/:blogId')
+  @Roles(['manager', 'admin'])
+  async delete(@Param('blogId') blogId: string, @User() user: UserT) {
     return await this.blogService.deleteAndCheckAuthor(blogId, user.googleId);
   }
 
-  @Put('/update/admin')
+  @Delete('/delete/admin/:blogId')
   @Roles(['admin'])
-  async updateAdmin(@Body('blog') blogDto: BlogDto) {
-    return await this.blogService.update(blogDto);
-  }
-
-  @Delete('/delete/admin')
-  @Roles(['admin'])
-  async deleteAdmin(@Body('blogId') blogId: string) {
+  async deleteAdmin(@Param('blogId') blogId: string) {
     return await this.blogService.delete(blogId);
   }
 }

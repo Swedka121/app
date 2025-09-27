@@ -16,7 +16,8 @@ export class BlogService {
     const blog = new this.blog(blogDto);
 
     return await blog.save().catch((err: { code: number; name: string }) => {
-      if (err.code == 11000) throw new BadRequestException('Duplicate error!');
+      if (err.code == 11000)
+        throw new BadRequestException('Duplicate error!' + JSON.stringify(err));
       else throw err;
     });
   }

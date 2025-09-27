@@ -37,7 +37,13 @@ export class Blog {
   @Prop({ type: [String], default: [] })
   comments: string[];
 
-  @Prop({ type: User, required: true })
+  @Prop({
+    type: User,
+    required: true,
+    unique: false,
+    clearIndexes: true,
+    excludeIndexes: true,
+  })
   author: User;
 }
 
