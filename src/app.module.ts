@@ -9,11 +9,10 @@ import { BlogModule } from './blog/blog.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://school1:B6k0glJ4QJLWJslr@cluster0.hxmup.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-      { dbName: 'SchoolApp' },
-    ),
     ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(process.env.MONGOOSE_LINK || '', {
+      dbName: 'SchoolApp',
+    }),
     UserModule,
     AuthModule,
     BlogModule,
