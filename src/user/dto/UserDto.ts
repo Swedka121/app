@@ -6,7 +6,7 @@ export class UserDto {
   email: string;
   googleId: string;
   roles: RoleT[];
-  avatar?: string;
+  avatar: string;
   constructor(
     username: string,
     email: string,
@@ -15,11 +15,11 @@ export class UserDto {
     id?: string,
     avatar?: string,
   ) {
-    this.id = id || 'none';
+    this.id = id ? id : 'none';
     this.username = username;
     this.email = email;
     this.googleId = googleId;
     this.roles = roles;
-    this.avatar = avatar || 'default';
+    this.avatar = avatar ? avatar : 'default';
   }
 }

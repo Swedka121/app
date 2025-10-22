@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { RoleGuard } from './guards/roles.guard';
 import { BlogModule } from './blog/blog.module';
+import { ResourcesModule } from './resources/resources.module';
+import { GalleryModule } from './gallery/gallery.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { BlogModule } from './blog/blog.module';
     UserModule,
     AuthModule,
     BlogModule,
+    ResourcesModule,
+    GalleryModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: RoleGuard }],
 })

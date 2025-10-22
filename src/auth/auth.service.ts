@@ -24,6 +24,7 @@ export class AuthService {
       email: string;
       picture: string;
     };
+    console.log('Picture of this user is', userData.picture);
     let user = await this.userService.findByGoogleId(userData.id);
     if (!user) {
       user = await this.userService.create(
@@ -32,6 +33,7 @@ export class AuthService {
           userData.email,
           userData.id,
           ['user'],
+          'none',
           userData.picture,
         ),
       );

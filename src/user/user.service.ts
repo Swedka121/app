@@ -10,8 +10,9 @@ export class UserService {
   constructor(@InjectModel(User.name) private user: Model<User>) {}
 
   async create(userDto: UserDto): Promise<UserModel> {
-    const user_inst = new this.user(userDto);
-    return await user_inst
+    const user_inst: unknown = new this.user(userDto);
+    console.log((user_inst as UserModel).avatar);
+    return await (user_inst as UserModel)
       .save()
       .catch((err: { code: number; name: string }) => {
         throw err && err.code == 11000

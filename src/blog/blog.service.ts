@@ -15,11 +15,13 @@ export class BlogService {
   async create(blogDto: BlogDto) {
     const blog = new this.blog(blogDto);
 
-    return await blog.save().catch((err: { code: number; name: string }) => {
+    await blog.save().catch((err: { code: number; name: string }) => {
       if (err.code == 11000)
         throw new BadRequestException('Duplicate error!' + JSON.stringify(err));
       else throw err;
     });
+
+    return blog;
   }
   async update(blogDto: BlogDto) {
     return await this.blog
@@ -59,11 +61,9 @@ export class BlogService {
     return await blog.deleteOne();
   }
   async getAll() {
-    return (await this.blog.find()).map((el) => ({
-      ...el,
-      content: null,
-      comments: el.comments.length,
-    }));
+    const data = await this.blog.find().lean();
+
+    return data.map((el) => ({ ...el, content: null }));
   }
   async getById(blogId: string) {
     return await this.blog.findById(blogId);
