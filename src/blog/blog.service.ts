@@ -63,6 +63,7 @@ export class BlogService {
   async getAll() {
     const data = await this.blog.find().lean();
 
+    console.log(data);
     return data.map((el) => ({ ...el, content: null }));
   }
   async getById(blogId: string) {
